@@ -7,10 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import "MainPageViewController.h"
+#import "MyStoryViewController.h"
+#import "RandomStoryViewController.h"
+#import "SettingViewController.h"
+#import "WriterMenuViewController.h"
 
 @interface AppDelegate()
 
 @property (nonatomic, strong) UITabBarController *tabBarController;
+@property (nonatomic, strong) MainPageViewController *mainPageViewCon;
+@property (nonatomic, strong) MyStoryViewController *myStoryViewCon;
+@property (nonatomic, strong) RandomStoryViewController *randomViewCon;
+@property (nonatomic, strong) SettingViewController *settingViewCon;
+@property (nonatomic, strong) WriterMenuViewController *writerMenuViewCon;
 
 @end
 
@@ -26,6 +36,29 @@
 
     self.tabBarController = [[UITabBarController alloc] init];
     
+    self.mainPageViewCon = [[MainPageViewController alloc] init];
+    [self.mainPageViewCon setTitle:@"Main"];
+    UINavigationController *mainPageNavCon = [[UINavigationController alloc] initWithRootViewController:self.mainPageViewCon];
+    
+    self.myStoryViewCon = [[MyStoryViewController alloc] init];
+    [self.myStoryViewCon setTitle:@"My Story"];
+    UINavigationController *myStoryNavCon = [[UINavigationController alloc] initWithRootViewController:self.myStoryViewCon];
+    
+    self.randomViewCon = [[RandomStoryViewController alloc] init];
+    [self.randomViewCon setTitle:@"Random"];
+   [self.tabBarController setDelegate:self.randomViewCon];
+    UINavigationController *randomNavCon = [[UINavigationController alloc] initWithRootViewController:self.randomViewCon];
+    
+    self.settingViewCon = [[SettingViewController alloc] init];
+    [self.settingViewCon setTitle:@"Setting"];
+    UINavigationController *settingNavCon = [[UINavigationController alloc] initWithRootViewController:self.settingViewCon];
+    
+    self.writerMenuViewCon = [[WriterMenuViewController alloc] init];
+    [self.writerMenuViewCon setTitle:@"Writer"];
+    UINavigationController *writerMenuNavCon = [[UINavigationController alloc] initWithRootViewController:self.writerMenuViewCon];
+    
+    [self.tabBarController setViewControllers:@[mainPageNavCon, myStoryNavCon, randomNavCon, writerMenuNavCon,settingNavCon]];
+    [self.window setRootViewController:self.tabBarController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

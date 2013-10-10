@@ -1,18 +1,18 @@
 //
-//  StoryTableViewController.m
+//  SettingViewController.m
 //  bokku
 //
-//  Created by Ted Cheng on 1/10/13.
+//  Created by Ted Cheng on 10/10/13.
 //  Copyright (c) 2013 Ted Cheng. All rights reserved.
 //
 
-#import "StoryTableViewController.h"
+#import "SettingViewController.h"
 
-@interface StoryTableViewController ()
+@interface SettingViewController ()
 
 @end
 
-@implementation StoryTableViewController
+@implementation SettingViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
