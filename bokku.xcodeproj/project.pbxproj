@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5126D062180D2786001DD24A /* demoThumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5126D061180D2786001DD24A /* demoThumbnail.jpg */; };
 		51753C5F18064EB80052A57B /* ActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C2018064EB80052A57B /* ActivityIndicatorManager.m */; };
 		51753C6018064EB80052A57B /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C2218064EB80052A57B /* Extension.m */; };
 		51753C6118064EB80052A57B /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C2418064EB80052A57B /* ImageCache.m */; };
@@ -73,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5126D061180D2786001DD24A /* demoThumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = demoThumbnail.jpg; path = ../../../Desktop/demoThumbnail.jpg; sourceTree = "<group>"; };
 		51753C1F18064EB80052A57B /* ActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicatorManager.h; sourceTree = "<group>"; };
 		51753C2018064EB80052A57B /* ActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityIndicatorManager.m; sourceTree = "<group>"; };
 		51753C2118064EB80052A57B /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 		95FBF15B17F9E035001C055E /* bokku */ = {
 			isa = PBXGroup;
 			children = (
+				5126D061180D2786001DD24A /* demoThumbnail.jpg */,
 				51753C83180666BB0052A57B /* Cell */,
 				51753C7F180652C60052A57B /* Model */,
 				51753C1D18064EB80052A57B /* TCDevelopmentLibrary */,
@@ -514,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95FBF16017F9E035001C055E /* InfoPlist.strings in Resources */,
+				5126D062180D2786001DD24A /* demoThumbnail.jpg in Resources */,
 				95FBF16B17F9E035001C055E /* Images.xcassets in Resources */,
 				51753C7B18064EB80052A57B /* Version.txt in Resources */,
 			);
