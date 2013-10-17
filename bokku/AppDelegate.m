@@ -34,6 +34,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    [[UINavigationBar appearance]setBarTintColor:[UIColor colorWithHex:@"#27ae60" alpha:1]];
+    
     self.tabBarController = [[UITabBarController alloc] init];
     
     self.mainPageViewCon = [[MainPageViewController alloc] init];

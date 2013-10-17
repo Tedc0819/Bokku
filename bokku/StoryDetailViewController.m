@@ -7,6 +7,7 @@
 //
 
 #import "StoryDetailViewController.h"
+#import "NSString+FontAwesome.h"
 
 @interface StoryDetailViewController()<UITableViewDataSource, UITableViewDelegate>
 
@@ -35,9 +36,8 @@
         self.tableView.tableFooterView = [[UIView alloc] init];
         self.specialZone = [[UIView alloc] init];
         [self.specialZone setBackgroundColor:[UIColor greenColor]];
-        [self setTitle:@"我在看着你"];
-        
-        [self.descriptionLabel setText:@"「你在哪？」穿著白色連身長裙的少女惶惑地叫喊著。孤單的身影漫無目的地在漆黑中，像在逃避似地奔跑。「噠！噠！噠！噠……」帶著水點的腳踏聲追隨著她纖細的雙腿，長至肩膀的黑髮亦隨著步伐左右搖曳。\n踏步的聲音漸漸緩下來，由小跑步變成踱步。少女一邊走，一邊左右掃視著，她下意識地撅著嘴，苦笑著向著空氣發嘮叨：「每次也是這樣！你不會悶啊！」沒有東西回應她。她眉頭一鎖，把原本可愛的面容都收起了：「出來吧！不要再玩了！」徬徨的叫聲在這個鬼地方回響著，似在嘲笑她一樣。 "];
+        [self setTitle:@"我在看首你"];
+        [self.descriptionLabel setText:@"「你在哪？」穿著白色連身長裙的少女惶惑地叫喊著。孤單的身影漫無目的地在漆黑中，像在逃避似地奔跑。「噠！噠！噠！噠……」帶著水點的腳踏聲追隨著她纖細的雙腿，長至肩膀的黑髮亦隨著步伐左右搖曳。\n\n踏步的聲音漸漸緩下來，由小跑步變成踱步。少女一邊走，一邊左右掃視著，她下意識地撅著嘴，苦笑著向著空氣發嘮叨：「每次也是這樣！你不會悶啊！」沒有東西回應她。\n\n她眉頭一鎖，把原本可愛的面容都收起了：「出來吧！不要再玩了！」徬徨的叫聲在這個鬼地方回響著，似在嘲笑她一樣。 "];
         [self.questionLabel setText:@"究竟嘲笑她的，是甚麼呢？"];
     }
     return self;
@@ -95,7 +95,29 @@
     return (((NSNumber *)array[indexPath.row]).floatValue);
 }
 
-#pragma mark - lazy loading 
+#pragma mark - target
+
+- (void)forwardButtonDidClick:(UIButton *)button
+{
+    NSLog(@"button = %@", button);
+}
+
+- (void)reverseButtonDidClick:(UIButton *)button
+{
+    NSLog(@"button = %@", button);
+}
+
+- (void)favButtonDidClick:(UIButton *)button
+{
+    NSLog(@"button = %@", button);
+}
+
+- (void)listButtonDidClick:(UIButton *)button
+{
+    NSLog(@"button = %@", button);
+}
+
+#pragma mark - lazy loading
 
 - (UITableViewCell *)thumbnailCell
 {
@@ -104,27 +126,35 @@
         [_thumbnailCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [_thumbnailCell setFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
         
-        UIImageView *thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.8, self.view.frame.size.width * 0.8 * (9.0 /16.0))];
+        UIImageView *thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.75, self.view.frame.size.width * 0.75 * (9.0 /16.0))];
         [thumbnailView setCenter:CGPointMake(CGRectGetMidX(_thumbnailCell.bounds), CGRectGetMidY(_thumbnailCell.bounds))];
         [thumbnailView setImage:[UIImage imageNamed:@"demoThumbnail.jpg"]];
         [thumbnailView setBackgroundColor:[UIColor blackColor]];
         [_thumbnailCell.contentView addSubview:thumbnailView];
         
-        UIButton *reverseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 25, 30, 50)];
-        [reverseButton setBackgroundColor:[UIColor redColor]];
-        [_thumbnailCell.contentView addSubview:reverseButton];
+        UIButton *reverseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 25, 35, 50)];
+        [reverseButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconBackward] forState:UIControlStateNormal];
+        [reverseButton addTarget:self action:@selector(reverseButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 75, 30, 50)];
-        [favButton setBackgroundColor:[UIColor greenColor]];
-        [_thumbnailCell.contentView addSubview:favButton];
+        UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 75, 35, 50)];
+        [favButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconBookmark] forState:UIControlStateNormal];
+        [favButton addTarget:self action:@selector(favButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *forwardButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 30, 25, 30, 50)];
-        [forwardButton setBackgroundColor:[UIColor blueColor]];
-        [_thumbnailCell.contentView addSubview:forwardButton];
+        UIButton *forwardButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 35, 25, 35, 50)];
+        [forwardButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconForward] forState:UIControlStateNormal];
+        [forwardButton addTarget:self action:@selector(forwardButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *listButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 30 , 75, 30, 50)];
-        [listButton setBackgroundColor:[UIColor yellowColor]];
-        [_thumbnailCell.contentView addSubview:listButton];
+        UIButton *listButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 35, 75, 35, 50)];
+        [listButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconList] forState:UIControlStateNormal];
+        [listButton addTarget:self action:@selector(listButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [@[reverseButton, favButton, forwardButton, listButton] enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
+            [button.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:12]];
+            [button setTitleColor:[UIColor colorWithHex:@"#95a5a6" alpha:1] forState:UIControlStateNormal];
+            [button setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1] forState:UIControlStateNormal];
+            [_thumbnailCell.contentView addSubview:button];
+        }];
+        
     }
     return _thumbnailCell;
 }
