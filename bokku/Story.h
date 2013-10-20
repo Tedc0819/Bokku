@@ -7,10 +7,14 @@
 //
 
 #import "TCJsonObject.h"
+#import "Author.h"
 
 @interface Story : TCJsonObject
 
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) Author *author;
+@property (nonatomic, strong) NSArray *storyPartIds;
+@property (nonatomic, strong) NSDictionary *stats;
 
 + (void)getFeaturedStoriesWithCompletion:(void(^)(NSArray *stories))completion;
 

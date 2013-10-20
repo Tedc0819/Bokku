@@ -25,9 +25,21 @@
 
 @property (nonatomic, strong) NSArray *cells;
 
+@property (nonatomic, strong) NSArray *dummyStoryPartIDs;
+
 @end
 
 @implementation StoryDetailViewController
+
+- (id)initWithStory:(Story *)story
+{
+    self = [self init];
+    if (self) {
+        self.story = story;
+        NSLog(@"Stories testing = %@ %@", self.story.storyPartIds, self.story.author.name);
+    }
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -75,6 +87,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)refresh
+{
+    
 }
 
 - (void)loadStoryPart

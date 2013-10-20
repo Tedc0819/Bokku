@@ -17,4 +17,15 @@
     }];
 }
 
+- (void)getPropertyValuesFromDictionary:(NSDictionary *)dict
+{
+    self.author = (Author *)[self parsingOwningObjectWithKeyPath:@[@"author"] AsClass:@"Author" FromJsonObjectDictionary:dict];
+    [super getPropertyValuesFromDictionary:dict];
+}
+
+- (NSDictionary *)mappingDictionary
+{
+    return @{@"story_part_ids" : @"storyPartIds"};
+}
+
 @end

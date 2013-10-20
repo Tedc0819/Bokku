@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5126D062180D2786001DD24A /* demoThumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5126D061180D2786001DD24A /* demoThumbnail.jpg */; };
 		5126D06A180D3876001DD24A /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5126D065180D3876001DD24A /* FAImageView.m */; };
 		5126D06B180D3876001DD24A /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 5126D067180D3876001DD24A /* NSString+FontAwesome.m */; };
 		5126D06C180D3876001DD24A /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 5126D069180D3876001DD24A /* UIFont+FontAwesome.m */; };
@@ -51,6 +50,9 @@
 		51753C921806916A0052A57B /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C911806916A0052A57B /* SettingViewController.m */; };
 		51753C95180691ED0052A57B /* WriterMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C94180691ED0052A57B /* WriterMenuViewController.m */; };
 		51753C9818069DDC0052A57B /* StoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C9718069DDC0052A57B /* StoryDetailViewController.m */; };
+		951D11361811A19500D498AA /* demoThumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 951D11351811A19500D498AA /* demoThumbnail.jpg */; };
+		951D11391811A76400D498AA /* StoryPart.m in Sources */ = {isa = PBXBuildFile; fileRef = 951D11381811A76400D498AA /* StoryPart.m */; };
+		958A58D6181394AE00219061 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 958A58D5181394AE00219061 /* Author.m */; };
 		95FBF15417F9E035001C055E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FBF15317F9E035001C055E /* Foundation.framework */; };
 		95FBF15617F9E035001C055E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FBF15517F9E035001C055E /* CoreGraphics.framework */; };
 		95FBF15817F9E035001C055E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FBF15717F9E035001C055E /* UIKit.framework */; };
@@ -80,7 +82,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5126D061180D2786001DD24A /* demoThumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = demoThumbnail.jpg; path = ../../../Desktop/demoThumbnail.jpg; sourceTree = "<group>"; };
 		5126D064180D3876001DD24A /* FAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAImageView.h; sourceTree = "<group>"; };
 		5126D065180D3876001DD24A /* FAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAImageView.m; sourceTree = "<group>"; };
 		5126D066180D3876001DD24A /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
@@ -165,6 +166,11 @@
 		51753C94180691ED0052A57B /* WriterMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriterMenuViewController.m; sourceTree = "<group>"; };
 		51753C9618069DDC0052A57B /* StoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryDetailViewController.h; sourceTree = "<group>"; };
 		51753C9718069DDC0052A57B /* StoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryDetailViewController.m; sourceTree = "<group>"; };
+		951D11351811A19500D498AA /* demoThumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demoThumbnail.jpg; sourceTree = "<group>"; };
+		951D11371811A76400D498AA /* StoryPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryPart.h; sourceTree = "<group>"; };
+		951D11381811A76400D498AA /* StoryPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryPart.m; sourceTree = "<group>"; };
+		958A58D4181394AE00219061 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		958A58D5181394AE00219061 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		95FBF15017F9E035001C055E /* bokku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bokku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95FBF15317F9E035001C055E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		95FBF15517F9E035001C055E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -358,6 +364,10 @@
 			children = (
 				51753C80180652DF0052A57B /* Story.h */,
 				51753C81180652DF0052A57B /* Story.m */,
+				951D11371811A76400D498AA /* StoryPart.h */,
+				951D11381811A76400D498AA /* StoryPart.m */,
+				958A58D4181394AE00219061 /* Author.h */,
+				958A58D5181394AE00219061 /* Author.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -407,8 +417,8 @@
 		95FBF15B17F9E035001C055E /* bokku */ = {
 			isa = PBXGroup;
 			children = (
+				951D11351811A19500D498AA /* demoThumbnail.jpg */,
 				5126D063180D3849001DD24A /* AwesomeFont */,
-				5126D061180D2786001DD24A /* demoThumbnail.jpg */,
 				51753C83180666BB0052A57B /* Cell */,
 				51753C7F180652C60052A57B /* Model */,
 				51753C1D18064EB80052A57B /* TCDevelopmentLibrary */,
@@ -554,8 +564,8 @@
 			files = (
 				5126D06F180D3DBA001DD24A /* FontAwesome.ttf in Resources */,
 				95FBF16017F9E035001C055E /* InfoPlist.strings in Resources */,
-				5126D062180D2786001DD24A /* demoThumbnail.jpg in Resources */,
 				95FBF16B17F9E035001C055E /* Images.xcassets in Resources */,
+				951D11361811A19500D498AA /* demoThumbnail.jpg in Resources */,
 				51753C7B18064EB80052A57B /* Version.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,7 +598,9 @@
 				51753C8C1806849E0052A57B /* MyStoryViewController.m in Sources */,
 				51753C95180691ED0052A57B /* WriterMenuViewController.m in Sources */,
 				51753C6218064EB80052A57B /* ImageFileManager.m in Sources */,
+				958A58D6181394AE00219061 /* Author.m in Sources */,
 				51753C6B18064EB80052A57B /* TCNoticeManager.m in Sources */,
+				951D11391811A76400D498AA /* StoryPart.m in Sources */,
 				5126D06A180D3876001DD24A /* FAImageView.m in Sources */,
 				5126D06B180D3876001DD24A /* NSString+FontAwesome.m in Sources */,
 				51753C7018064EB80052A57B /* TCHorizontalViewListAdapter.m in Sources */,
