@@ -41,7 +41,7 @@
 {
     TCJsonObject *item = self.segmentingManager.currentItems[indexPath.row];
     if ([item isKindOfClass:[Story class]]) {
-        StoryDetailViewController *detailViewController = [[StoryDetailViewController alloc] init];
+        StoryDetailViewController *detailViewController = [[StoryDetailViewController alloc] initWithStory:(Story *)item];
         [self.navigationController pushViewController:detailViewController animated:YES];
     }
 }
