@@ -8,10 +8,13 @@
 
 #import "TCJsonObject.h"
 
-@interface StoryPart : TCJsonObject
+extern NSString *const StoryPartStoreKey;
+
+@interface StoryPart : TCJsonObject<TCStorable>
 
 @property (nonatomic, strong) NSString *content;
 
 + (void)getStoryPartsByIDs:(NSArray *)IDs withCompletion:(void(^)(NSArray *storyParts)) completion;
++ (void)getStoryPartsByID:(NSNumber *)storyPartID withCompletion:(void (^)(StoryPart *storyPart))completion;
 
 @end

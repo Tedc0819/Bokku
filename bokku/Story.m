@@ -7,6 +7,7 @@
 //
 
 #import "Story.h"
+#import "TCStoreManager.h"
 
 @implementation Story
 
@@ -26,6 +27,18 @@
 - (NSDictionary *)mappingDictionary
 {
     return @{@"story_part_ids" : @"storyPartIds"};
+}
+
+- (void)loadStoryPartWithID:(NSNumber *)storyPartID withCompletion:(void(^)(StoryPart *storyPart))completion
+{
+    StoryPart *storyPart = [[TCStoreManager sharedManager]objectWithKey:storyPartID.stringValue inStoreWithKey:StoryPartStoreKey];
+    if (storyPart) completion(storyPart);
+    return;
+    
+    [StoryPart getStoryPartsByID:storyPartID withCompletion:^(StoryPart *storyPart) {
+        if (storyPart) [storyPart cacheStorable];
+        completion(storyPart);
+    }];
 }
 
 @end
