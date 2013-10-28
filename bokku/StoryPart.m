@@ -14,14 +14,16 @@ NSString *const StoryPartStoreKey = @"StoryPartStoreKey";
 
 + (void)getStoryPartsByIDs:(NSArray *)IDs withCompletion:(void(^)(NSArray *storyParts)) completion
 {
-    [self getObjectsFromURL:[NSURL URLWithString:@"http://bokkuapi.herokuapp.com/api/stories/81"] ParsingKeyPath:@[@"stroy_parts"] Completion:^(NSArray *objects) {
+    NSMutableString *params = [[NSMutableString alloc] init];
+    [IDs enumerateObjectsUsingBlock:^(NSNumber *number, NSUInteger idx, BOOL *stop) {
+    if (params.length != 0) [params appendString:@"&"];
+        [params appendString:[NSString stringWithFormat:@"ids[]=%@", number.stringValue]];
+    }];
+
+    NSString *urlString = [NSString stringWithFormat:@"http://bokkuapi.herokuapp.com/api/story_parts?%@", params];
+    [self getObjectsFromURL:[NSURL URLWithString:urlString] ParsingKeyPath:@[@"story_parts"] Completion:^(NSArray *objects) {
         completion(objects);
     }];
-}
-
-+ (void)getStoryPartsByID:(NSNumber *)storyPartID withCompletion:(void (^)(StoryPart *storyPart))completion
-{
-    
 }
 
 #pragma mark - storable protocol
@@ -39,6 +41,11 @@ NSString *const StoryPartStoreKey = @"StoryPartStoreKey";
 - (void)cacheStorable
 {
     [[TCStoreManager sharedManager] storeObject:self ToStoreWithKey:StoryPartStoreKey];
+}
+
+- (NSString *)description
+{
+    return ((NSNumber *)self.objID).stringValue;
 }
 
 @end

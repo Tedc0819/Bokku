@@ -29,16 +29,18 @@
     return @{@"story_part_ids" : @"storyPartIds"};
 }
 
-- (void)loadStoryPartWithID:(NSNumber *)storyPartID withCompletion:(void(^)(StoryPart *storyPart))completion
+- (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion
 {
-    StoryPart *storyPart = [[TCStoreManager sharedManager]objectWithKey:storyPartID.stringValue inStoreWithKey:StoryPartStoreKey];
-    if (storyPart) completion(storyPart);
-    return;
+    NSNumber *indexedStoryPartID = self.storyPartIds[index];
     
-    [StoryPart getStoryPartsByID:storyPartID withCompletion:^(StoryPart *storyPart) {
-        if (storyPart) [storyPart cacheStorable];
-        completion(storyPart);
+    NSInteger location = index - StoryPartBuffer < 0 ? 0 : index - StoryPartBuffer;
+    NSInteger length = location + StoryPartBuffer * 2 > self.storyPartIds.count - 1 ? self.storyPartIds.count - location : StoryPartBuffer * 2 + 1;
+    NSArray *storyPartIDs = [self.storyPartIds subarrayWithRange:NSMakeRange(location, length)];
+    __block NSInteger target = [storyPartIDs indexOfObject:indexedStoryPartID];
+    [StoryPart getStoryPartsByIDs:storyPartIDs withCompletion:^(NSArray *storyParts) {
+        completion(storyParts, storyParts[target]);
     }];
+    
 }
 
 @end

@@ -15,6 +15,5 @@ extern NSString *const StoryPartStoreKey;
 @property (nonatomic, strong) NSString *content;
 
 + (void)getStoryPartsByIDs:(NSArray *)IDs withCompletion:(void(^)(NSArray *storyParts)) completion;
-+ (void)getStoryPartsByID:(NSNumber *)storyPartID withCompletion:(void (^)(StoryPart *storyPart))completion;
 
 @end

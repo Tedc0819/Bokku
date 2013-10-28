@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) NSNumber *currentStoryPartID;
 
-@end
+                @end
 
 @implementation StoryDetailViewController
 
@@ -38,7 +38,6 @@
     self = [self init];
     if (self) {
         self.story = story;
-        NSLog(@"Stories testing = %@ %@", self.story.storyPartIds, self.story.author.name);
     }
     return self;
 }
@@ -74,7 +73,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self downloadStoryPartWithID:self.story.storyPartIds.lastObject];
+    [self.story loadStoryPartWithIndex:self.story.storyPartIds.count - 1 withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
+
+    }];
 }
 
 - (void)viewDidLayoutSubviews

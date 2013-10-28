@@ -10,6 +10,8 @@
 #import "Author.h"
 #import "StoryPart.h"
 
+#define StoryPartBuffer 2
+
 @interface Story : TCJsonObject<TCStorable>
 
 @property (nonatomic, strong) NSString *title;
@@ -18,6 +20,6 @@
 @property (nonatomic, strong) NSDictionary *stats;
 
 + (void)getFeaturedStoriesWithCompletion:(void(^)(NSArray *stories))completion;
-- (void)loadStoryPartWithID:(NSNumber *)storyPartID withCompletion:(void(^)(StoryPart *storyPart))completion;
+- (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion;
 
 @end
