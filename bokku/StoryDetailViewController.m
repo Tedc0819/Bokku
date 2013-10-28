@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong) NSArray *dummyStoryPartIDs;
 
+@property (nonatomic, strong) NSNumber *currentStoryPartID;
+
 @end
 
 @implementation StoryDetailViewController
@@ -72,7 +74,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self loadStoryPart];
+    [self downloadStoryPartWithID:self.story.storyPartIds.lastObject];
 }
 
 - (void)viewDidLayoutSubviews
@@ -92,6 +94,12 @@
 - (void)refresh
 {
     
+}
+
+- (void)downloadStoryPartWithID:(NSNumber *)storyPartID
+{
+    self.currentStoryPartID = storyPartID;
+    NSLog(@"story ID = %@", storyPartID);
 }
 
 - (void)loadStoryPart

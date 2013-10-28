@@ -15,4 +15,5 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import "Extension.h"
+    #import "TCStoreManager.h"
 #endif

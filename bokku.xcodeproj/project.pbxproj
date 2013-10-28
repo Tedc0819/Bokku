@@ -50,6 +50,8 @@
 		51753C921806916A0052A57B /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C911806916A0052A57B /* SettingViewController.m */; };
 		51753C95180691ED0052A57B /* WriterMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C94180691ED0052A57B /* WriterMenuViewController.m */; };
 		51753C9818069DDC0052A57B /* StoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C9718069DDC0052A57B /* StoryDetailViewController.m */; };
+		517B33D41818D78F00F462DD /* TCStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517B33D31818D78F00F462DD /* TCStoreManager.m */; };
+		517B33D71818D7EF00F462DD /* TCStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 517B33D61818D7EF00F462DD /* TCStore.m */; };
 		951D11361811A19500D498AA /* demoThumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 951D11351811A19500D498AA /* demoThumbnail.jpg */; };
 		951D11391811A76400D498AA /* StoryPart.m in Sources */ = {isa = PBXBuildFile; fileRef = 951D11381811A76400D498AA /* StoryPart.m */; };
 		958A58D6181394AE00219061 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 958A58D5181394AE00219061 /* Author.m */; };
@@ -166,6 +168,10 @@
 		51753C94180691ED0052A57B /* WriterMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriterMenuViewController.m; sourceTree = "<group>"; };
 		51753C9618069DDC0052A57B /* StoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryDetailViewController.h; sourceTree = "<group>"; };
 		51753C9718069DDC0052A57B /* StoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryDetailViewController.m; sourceTree = "<group>"; };
+		517B33D21818D78F00F462DD /* TCStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreManager.h; sourceTree = "<group>"; };
+		517B33D31818D78F00F462DD /* TCStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreManager.m; sourceTree = "<group>"; };
+		517B33D51818D7EF00F462DD /* TCStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStore.h; sourceTree = "<group>"; };
+		517B33D61818D7EF00F462DD /* TCStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStore.m; sourceTree = "<group>"; };
 		951D11351811A19500D498AA /* demoThumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demoThumbnail.jpg; sourceTree = "<group>"; };
 		951D11371811A76400D498AA /* StoryPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryPart.h; sourceTree = "<group>"; };
 		951D11381811A76400D498AA /* StoryPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryPart.m; sourceTree = "<group>"; };
@@ -247,6 +253,10 @@
 				51753C5C18064EB80052A57B /* TCSideMenuViewController.h */,
 				51753C5D18064EB80052A57B /* TCSideMenuViewController.m */,
 				51753C5E18064EB80052A57B /* Version.txt */,
+				517B33D21818D78F00F462DD /* TCStoreManager.h */,
+				517B33D31818D78F00F462DD /* TCStoreManager.m */,
+				517B33D51818D7EF00F462DD /* TCStore.h */,
+				517B33D61818D7EF00F462DD /* TCStore.m */,
 			);
 			name = TCDevelopmentLibrary;
 			path = ../../TCDevelopmentLibrary;
@@ -626,7 +636,9 @@
 				51753C6118064EB80052A57B /* ImageCache.m in Sources */,
 				51753C6718064EB80052A57B /* UIView+FindViewsByClass.m in Sources */,
 				51753C6318064EB80052A57B /* TCRequest.m in Sources */,
+				517B33D71818D7EF00F462DD /* TCStore.m in Sources */,
 				51753C6618064EB80052A57B /* UINavigationController+ShowNotice.m in Sources */,
+				517B33D41818D78F00F462DD /* TCStoreManager.m in Sources */,
 				51753C7718064EB80052A57B /* TCSegmentedResourcesManager.m in Sources */,
 				51753C89180683A50052A57B /* MainPageViewController.m in Sources */,
 				95FBF16217F9E035001C055E /* main.m in Sources */,
