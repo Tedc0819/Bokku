@@ -12,7 +12,7 @@ extern NSString *const StoryPartStoreKey;
 
 @interface StoryPart : TCJsonObject<TCStorable>
 
-@property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSString *title;
 
 + (void)getStoryPartsByIDs:(NSArray *)IDs withCompletion:(void(^)(NSArray *storyParts)) completion;
 

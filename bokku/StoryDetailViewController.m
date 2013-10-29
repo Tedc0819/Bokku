@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) NSArray *dummyStoryPartIDs;
 
-@property (nonatomic, strong) NSNumber *currentStoryPartID;
+@property (nonatomic, assign) NSUInteger currentStoryPartIndex;
 
                 @end
 
@@ -38,6 +38,8 @@
     self = [self init];
     if (self) {
         self.story = story;
+        self.currentStoryPartIndex = self.story.storyPartIds.count - 1;
+        [self setTitle:self.story.title];
     }
     return self;
 }
@@ -73,9 +75,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.story loadStoryPartWithIndex:self.story.storyPartIds.count - 1 withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
-
-    }];
+    [self loadCurrentStoryPart];
 }
 
 - (void)viewDidLayoutSubviews
@@ -92,21 +92,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refresh
+- (void)loadCurrentStoryPart
 {
-    
+    [self.story loadStoryPartWithIndex:self.currentStoryPartIndex withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
+        [self loadStoryPart:storyPart];
+    }];
 }
 
-- (void)downloadStoryPartWithID:(NSNumber *)storyPartID
+- (void)loadStoryPart:(StoryPart *)storyPart
 {
-    self.currentStoryPartID = storyPartID;
-    NSLog(@"story ID = %@", storyPartID);
-}
-
-- (void)loadStoryPart
-{
-    [self setTitle:@"我在看首你"];
-    [self.storyDescriptionCell.textLabel setText:@"「你在哪？」穿著白色連身長裙的少女惶惑地叫喊著。孤單的身影漫無目的地在漆黑中，像在逃避似地奔跑。「噠！噠！噠！噠……」帶著水點的腳踏聲追隨著她纖細的雙腿，長至肩膀的黑髮亦隨著步伐左右搖曳。\n\n踏步的聲音漸漸緩下來，由小跑步變成踱步。少女一邊走，一邊左右掃視著，她下意識地撅著嘴，苦笑著向著空氣發嘮叨：「每次也是這樣！你不會悶啊！」沒有東西回應她。\n\n她眉頭一鎖，把原本可愛的面容都收起了：「出來吧！不要再玩了！」徬徨的叫聲在這個鬼地方回響著，似在嘲笑她一樣。 "];
+//    [self.storyDescriptionCell.textLabel setText:@"「你在哪？」穿著白色連身長裙的少女惶惑地叫喊著。孤單的身影漫無目的地在漆黑中，像在逃避似地奔跑。「噠！噠！噠！噠……」帶著水點的腳踏聲追隨著她纖細的雙腿，長至肩膀的黑髮亦隨著步伐左右搖曳。\n\n踏步的聲音漸漸緩下來，由小跑步變成踱步。少女一邊走，一邊左右掃視著，她下意識地撅著嘴，苦笑著向著空氣發嘮叨：「每次也是這樣！你不會悶啊！」沒有東西回應她。\n\n她眉頭一鎖，把原本可愛的面容都收起了：「出來吧！不要再玩了！」徬徨的叫聲在這個鬼地方回響著，似在嘲笑她一樣。 "];
+    [self.storyDescriptionCell.textLabel setText:storyPart.title];
     [self.questionCell.textLabel setText:@"究竟嘲笑她的，是甚麼呢？"];
     [self.choiceACell.textLabel setText:@"1. 你好"];
     [self.choiceBCell.textLabel setText:@"2. Omg! 佢係我上司個朋友個朋友個朋友個朋友個朋友個朋友個朋友個朋友個朋友"];
