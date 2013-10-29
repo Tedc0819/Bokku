@@ -32,15 +32,22 @@
 - (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion
 {
     NSNumber *indexedStoryPartID = self.storyPartIds[index];
+    StoryPart *storyPart = [[TCStoreManager sharedManager] objectWithKey:indexedStoryPartID.stringValue inStoreWithKey:StoryPartStoreKey];
+    if (storyPart) {
+        completion(nil, storyPart);
+        return;
+    }
     
     NSInteger location = index - StoryPartBuffer < 0 ? 0 : index - StoryPartBuffer;
     NSInteger length = location + StoryPartBuffer * 2 > self.storyPartIds.count - 1 ? self.storyPartIds.count - location : StoryPartBuffer * 2 + 1;
     NSArray *storyPartIDs = [self.storyPartIds subarrayWithRange:NSMakeRange(location, length)];
     __block NSInteger target = [storyPartIDs indexOfObject:indexedStoryPartID];
     [StoryPart getStoryPartsByIDs:storyPartIDs withCompletion:^(NSArray *storyParts) {
+        [storyParts enumerateObjectsUsingBlock:^(StoryPart *part, NSUInteger idx, BOOL *stop) {
+            [part cacheStorable];
+        }];
         completion(storyParts, storyParts[target]);
     }];
-    
 }
 
 @end
