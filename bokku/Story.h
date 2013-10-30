@@ -22,4 +22,6 @@
 + (void)getFeaturedStoriesWithCompletion:(void(^)(NSArray *stories))completion;
 - (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion;
 
+- (NSUInteger)maxPage;
+
 @end

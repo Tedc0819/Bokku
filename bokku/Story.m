@@ -34,6 +34,7 @@
     NSNumber *indexedStoryPartID = self.storyPartIds[index];
     StoryPart *storyPart = [[TCStoreManager sharedManager] objectWithKey:indexedStoryPartID.stringValue inStoreWithKey:StoryPartStoreKey];
     if (storyPart) {
+        NSLog(@"From local , part id = %@", indexedStoryPartID);
         completion(nil, storyPart);
         return;
     }
@@ -45,9 +46,16 @@
     [StoryPart getStoryPartsByIDs:storyPartIDs withCompletion:^(NSArray *storyParts) {
         [storyParts enumerateObjectsUsingBlock:^(StoryPart *part, NSUInteger idx, BOOL *stop) {
             [part cacheStorable];
+            NSLog(@"%@", [TCStoreManager sharedManager].description);
         }];
+        NSLog(@"From server , part id = %@", indexedStoryPartID);
         completion(storyParts, storyParts[target]);
     }];
+}
+
+- (NSUInteger)maxPage
+{
+    return self.storyPartIds.count - 1;
 }
 
 @end

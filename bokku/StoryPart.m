@@ -30,7 +30,7 @@ NSString *const StoryPartStoreKey = @"StoryPartStoreKey";
 
 - (NSString *)storableKey
 {
-    return self.objID;
+    return ((NSNumber *)self.objID).stringValue;
 }
 
 - (NSDictionary *)storableContentDictionary
