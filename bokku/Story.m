@@ -11,6 +11,15 @@
 
 @implementation Story
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.likeStatus = StoryLikeStatusNormal;
+    }
+    return self;
+}
+
 + (void)getFeaturedStoriesWithCompletion:(void(^)(NSArray *stories))completion
 {
     [self getObjectsFromURL:[NSURL URLWithString:@"http://bokkuapi.herokuapp.com/api/stories"] ParsingKeyPath:@[@"stories"] Completion:^(NSArray *objects) {

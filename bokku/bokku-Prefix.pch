@@ -16,4 +16,5 @@
     #import <CoreData/CoreData.h>
     #import "Extension.h"
     #import "TCStoreManager.h"
+    #import "ActivityIndicatorManager.h"
 #endif
