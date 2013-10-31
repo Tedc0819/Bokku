@@ -38,6 +38,11 @@
 @property (nonatomic, assign) NSInteger popCount;
 @property (nonatomic, assign) NSInteger acPopCount;
 
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) BOOL popButtonShouldFade;
+
+@property (nonatomic, strong) UIView *paginationView;
+
 @end
 
 @implementation StoryDetailViewController
@@ -87,6 +92,11 @@
     [self.tableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - specialZoneHeight)];
     [self.specialZone setFrame:CGRectMake(0, self.view.frame.size.height - specialZoneHeight, self.view.frame.size.width, specialZoneHeight)];
     
+    self.paginationView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.center.y - 10, self.view.frame.size.width, specialZoneHeight + 10)];
+    [self.paginationView setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
+    [self.paginationView setAlpha:0];
+    [self.view addSubview:self.paginationView];
+    
     UIButton *reverseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.center.y - 10, 30, specialZoneHeight + 10)];
     [reverseButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconBackward] forState:UIControlStateNormal];
     [reverseButton addTarget:self action:@selector(reverseButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -112,6 +122,7 @@
     UIButton *popButton = [[UIButton alloc] initWithFrame:CGRectMake(width * 2, self.view.frame.size.height - specialZoneHeight - 3, specialButtonWidth, specialZoneHeight + 3)];
     [popButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconCircle] forState:UIControlStateNormal];
     [popButton addTarget:self action:@selector(popButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    [popButton setAdjustsImageWhenHighlighted:NO];
     
     UIButton *listButton = [[UIButton alloc] initWithFrame:CGRectMake(width * 2 + specialButtonWidth, self.view.frame.size.height - specialZoneHeight, width, specialZoneHeight)];
     [listButton setTitle:[NSString fontAwesomeIconStringForEnum:FAIconList] forState:UIControlStateNormal];
@@ -120,11 +131,14 @@
     [@[reverseButton, favButton, forwardButton, listButton, popButton, likeButton, dislikeButton] enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
         [button.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:14]];
         [button setTitleColor:[UIColor colorWithHex:@"#95a5a6" alpha:1] forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1] forState:UIControlStateNormal];
+        if (button != popButton) {
+            [button setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1] forState:UIControlStateNormal];
+        }
         [self.view addSubview:button];
     }];
     
     [popButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:18]];
+    [popButton setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
     
     [likeButton setTitleColor:[UIColor colorWithHex:@"#3498db" alpha:1] forState:UIControlStateNormal];
     [likeButton setTitleColor:[UIColor colorWithHex:@"#2980b9" alpha:1] forState:UIControlStateSelected];
@@ -145,6 +159,7 @@
 {
     [super viewDidAppear:animated];
     [self loadCurrentStoryPart];
+    [self startTimer];
 }
 
 - (void)viewDidLayoutSubviews
@@ -160,6 +175,8 @@
 
 - (void)loadCurrentStoryPart
 {
+    if (self.story.storyPartIds.count == 0) return;
+
     [ActivityIndicatorManager showIndicatorForActivity:@"StoryPartLoading"];
     [self.story loadStoryPartWithIndex:self.currentStoryPartIndex withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
         [self loadStoryPart:storyPart];
@@ -218,9 +235,7 @@
 - (void)listingAnimation
 {
     UIView *leftView = [[UIView alloc] initWithFrame:self.reverseButton.frame];
-    [leftView setTag:123];
     UIView *rightView = [[UIView alloc] initWithFrame:self.forwardButton.frame];
-    [rightView setTag:456];
 
     [@[leftView, rightView] enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         [view setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
@@ -237,8 +252,11 @@
                          rightViewFrame.size.width = self.view.frame.size.width / 2;
                          rightViewFrame.origin.x = self.view.frame.size.width / 2;
                          [rightView setFrame:rightViewFrame];
+                         [self.paginationView setAlpha:1];
                      }
                      completion:^(BOOL finished) {
+                         [leftView removeFromSuperview];
+                         [rightView removeFromSuperview];
                          self.isListingShown = YES;
                      }];
 }
@@ -246,10 +264,7 @@
 - (void)removeListing
 {
     if (!self.isListingShown) return;
-    UIView *leftView = [self.view viewWithTag:123];
-    UIView *rightView = [self.view viewWithTag:456];
-    [leftView removeFromSuperview];
-    [rightView removeFromSuperview];
+    [self.paginationView setAlpha:0];
     self.isListingShown = NO;
 }
 
@@ -270,12 +285,43 @@
 
 - (void)updatePopButtonStatus
 {
-    NSString *colorStr = @"";
-    if (self.popCount == 0) colorStr = @"#ecf0f1";
-    if (self.popCount > 0) colorStr = @"#3498db";
-    if (self.popCount < 0) colorStr = @"#e74c3c";
+    UIColor *color = [UIColor colorWithHex:@"#ecf0f1" alpha:1];
+    CGFloat factor = ((float)self.popCount) / 20.0;
+    factor = factor < 0 ? -factor : factor;
+    factor = factor > 0.8 ? 0.8 : factor;
+
+    if (self.popCount > 0) color = [UIColor colorWithHex:@"#3498db" alpha:factor + 0.2];
+    if (self.popCount < 0) color = [UIColor colorWithHex:@"#e74c3c" alpha:factor + 0.2];
     
-    [self.popButton setBackgroundColor:[UIColor colorWithHex:colorStr alpha:1] forState:UIControlStateNormal];
+    [self.popButton setBackgroundColor:color];
+}
+
+#pragma mark - timer 
+
+- (void)startTimer
+{
+    [self stopTimer];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(regularAction) userInfo:nil repeats:YES];
+}
+
+- (void)stopTimer
+{
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+- (void)regularAction
+{
+    if (self.popButtonShouldFade) {
+        self.popButtonShouldFade = NO;
+        self.popCount = 0;
+        
+        [UIView animateWithDuration:1 animations:^{
+            [self updatePopButtonStatus];
+        }];
+    }
+    self.popButtonShouldFade = !(self.popCount == 0);
+
 }
 
 #pragma mark - target
@@ -304,6 +350,7 @@
 - (void)listButtonDidClick:(UIButton *)button
 {
     NSLog(@"button = %@", button);
+    if (self.isListingShown) return;
     [self listingAnimation];
 }
 
@@ -311,6 +358,8 @@
 {
     NSLog(@"button = %@", button);
     self.popCount += self.story.likeStatus * 1;
+    NSLog(@"clicked , count - %d", self.popCount);
+    self.popButtonShouldFade = NO;
     [self updatePopButtonStatus];
 }
 
@@ -341,6 +390,11 @@
 #pragma mark - scrollView delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self removeListing];
 }

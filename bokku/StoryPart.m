@@ -26,7 +26,7 @@ NSString *const StoryPartStoreKey = @"StoryPartStoreKey";
     }];
 }
 
-#pragma mark - storable protocol
+#pragma mark - storable protocolgg
 
 - (NSString *)storableKey
 {
