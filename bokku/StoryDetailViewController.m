@@ -9,8 +9,13 @@
 #import "StoryDetailViewController.h"
 #import "NSString+FontAwesome.h"
 #import "ChoiceCell.h"
+#import "TCHorizontalTableView.h"
+#import "PaginationAdapter.h"
 
 #define StoryDescriptionFontSize 18.0
+
+#define specialZoneHeight 50
+#define specialButtonWidth 90
 
 @interface StoryDetailViewController()<UITableViewDataSource, UITableViewDelegate>
 
@@ -42,6 +47,8 @@
 @property (nonatomic, assign) BOOL popButtonShouldFade;
 
 @property (nonatomic, strong) UIView *paginationView;
+@property (nonatomic, strong) TCHorizontalTableView *paginationTableView;
+@property (nonatomic, strong) PaginationAdapter *paginationAdapter;
 
 @end
 
@@ -63,12 +70,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.tableView = [[UITableView alloc] init];
-        [self.tableView setDataSource:self];
-        [self.tableView setDelegate:self];
-        self.tableView.tableFooterView = [[UIView alloc] init];
-        self.specialZone = [[UIView alloc] init];
-        [self.specialZone setBackgroundColor:[UIColor greenColor]];
+
     }
     return self;
 }
@@ -81,20 +83,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.specialZone];
-	// Do any additional setup after loading the view.
     
-    CGFloat specialZoneHeight = 50;
-    CGFloat specialButtonWidth = 90;
+    [self.view addSubview:self.tableView];
+	// Do any additional setup after loading the view.
+
     CGFloat width = (self.view.frame.size.width - specialButtonWidth) / 4.0;
     
     [self.tableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - specialZoneHeight)];
-    [self.specialZone setFrame:CGRectMake(0, self.view.frame.size.height - specialZoneHeight, self.view.frame.size.width, specialZoneHeight)];
-    
-    self.paginationView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.center.y - 10, self.view.frame.size.width, specialZoneHeight + 10)];
-    [self.paginationView setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
-    [self.paginationView setAlpha:0];
+
     [self.view addSubview:self.paginationView];
     
     UIButton *reverseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.center.y - 10, 30, specialZoneHeight + 10)];
@@ -329,6 +325,11 @@
 - (void)forwardButtonDidClick:(UIButton *)button
 {
     NSLog(@"button = %@", button);
+    if (self.isListingShown) {
+        [self.paginationAdapter scrollToNextPageWithAnimation:YES];
+        return;
+    }
+    
     if (self.currentStoryPartIndex >= self.story.maxPage) return;
     self.currentStoryPartIndex += 1;
     [self loadCurrentStoryPart];
@@ -337,6 +338,11 @@
 - (void)reverseButtonDidClick:(UIButton *)button
 {
     NSLog(@"button = %@", button);
+    if (self.isListingShown) {
+        [self.paginationAdapter scrollToPreviousPageWithAnimation:YES];
+        return;
+    }
+    
     if (self.currentStoryPartIndex <= 0) return;
     self.currentStoryPartIndex -= 1;
     [self loadCurrentStoryPart];
@@ -400,6 +406,49 @@
 }
 
 #pragma mark - lazy loading
+
+- (UITableView *)tableView
+{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] init];
+        [_tableView setDataSource:self];
+        [_tableView setDelegate:self];
+        _tableView.tableFooterView = [[UIView alloc] init];
+    }
+    return _tableView;
+}
+
+- (UIView *)paginationView
+{
+    if (!_paginationView) {
+        _paginationView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.center.y - 10, self.view.frame.size.width, specialZoneHeight + 10)];
+        [_paginationView setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
+        [_paginationView setAlpha:0];
+        [self.paginationTableView setFrame:CGRectMake(0, 0, _paginationView.frame.size.width, _paginationView.frame.size.height)];
+        [_paginationView addSubview:self.paginationTableView];
+    }
+    return _paginationView;
+}
+
+- (TCHorizontalTableView *)paginationTableView
+{
+    if (!_paginationTableView) {
+        _paginationTableView = [[TCHorizontalTableView alloc] init];
+        [_paginationTableView setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
+        [self.paginationAdapter handleTableView:_paginationTableView];
+    }
+    return _paginationTableView;
+}
+
+- (PaginationAdapter *)paginationAdapter
+{
+    if (!_paginationAdapter) {
+        _paginationAdapter = [[PaginationAdapter alloc] init];
+        [_paginationAdapter setItems:self.story.storyPartIds];
+        NSLog(@"items = %@", self.story);
+    }
+    return _paginationAdapter;
+}
 
 - (NSArray *)cells
 {
