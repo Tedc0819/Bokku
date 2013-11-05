@@ -30,6 +30,7 @@
         [cell.contentView setTransform:CGAffineTransformMakeRotation( M_PI / 2)];
         [cell.contentView setBackgroundColor:[UIColor colorWithHex:@"#ecf0f1" alpha:1]];
         [cell.textLabel setTextColor:[UIColor colorWithHex:@"#95a5a6" alpha:1]];
+        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
     }
     [cell.textLabel setText:@(indexPath.row).stringValue];
     

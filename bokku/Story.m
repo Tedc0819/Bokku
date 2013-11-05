@@ -55,7 +55,7 @@
     [StoryPart getStoryPartsByIDs:storyPartIDs withCompletion:^(NSArray *storyParts) {
         [storyParts enumerateObjectsUsingBlock:^(StoryPart *part, NSUInteger idx, BOOL *stop) {
             [part cacheStorable];
-            NSLog(@"%@", [TCStoreManager sharedManager].description);
+//            NSLog(@"%@", [TCStoreManager sharedManager].description);
         }];
         NSLog(@"From server , part id = %@", indexedStoryPartID);
         completion(storyParts, storyParts[target]);

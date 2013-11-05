@@ -12,12 +12,14 @@
 #import "TCHorizontalTableView.h"
 #import "PaginationAdapter.h"
 
+NSString *const StoryPartLoadingActivity = @"StoryPartLoadingActivity";
+
 #define StoryDescriptionFontSize 18.0
 
 #define specialZoneHeight 50
 #define specialButtonWidth 90
 
-@interface StoryDetailViewController()<UITableViewDataSource, UITableViewDelegate>
+@interface StoryDetailViewController()<UITableViewDataSource, UITableViewDelegate, TCHoriTableViewAdapterDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *specialZone;
@@ -149,6 +151,13 @@
     self.forwardButton = forwardButton;
     self.reverseButton = reverseButton;
     self.popButton = popButton;
+    
+    UISwipeGestureRecognizer *leftSwipeRecog = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe)];
+    [leftSwipeRecog setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:leftSwipeRecog];
+    UISwipeGestureRecognizer *rightSwipeRecog = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe)];
+    [rightSwipeRecog setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:rightSwipeRecog];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -171,17 +180,27 @@
 
 - (void)loadCurrentStoryPart
 {
-    if (self.story.storyPartIds.count == 0) return;
+    [self loadStoryPartWithIndex:self.currentStoryPartIndex];
+}
 
-    [ActivityIndicatorManager showIndicatorForActivity:@"StoryPartLoading"];
-    [self.story loadStoryPartWithIndex:self.currentStoryPartIndex withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
-        [self loadStoryPart:storyPart];
+- (void)loadStoryPartWithIndex:(NSUInteger)index
+{
+    if ((self.story.storyPartIds.count == 0) || (index > self.story.maxPage )) return;
+    
+    [ActivityIndicatorManager showIndicatorForActivity:StoryPartLoadingActivity];
+    [[TCNoticeManager sharedManager] dismissNoticeWithTag:StoryPartLoadingActivity];
+    [[TCNoticeManager sharedManager] showNoticeWithText:[NSString stringWithFormat:@"Loading Page %lu ...",(unsigned long)index] Tag:StoryPartLoadingActivity Type:TCNoticeTypeNavigationBarBanner];
+    
+    [self.story loadStoryPartWithIndex:index withCompletion:^(NSArray *relatedParts, StoryPart *storyPart) {
+        if (index != self.currentStoryPartIndex) return;
+        [ActivityIndicatorManager dismissIndicatorForActivity:StoryPartLoadingActivity];
+        [[TCNoticeManager sharedManager] dismissNoticeWithTag:StoryPartLoadingActivity];
+        [self displayStoryPart:storyPart];
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        [ActivityIndicatorManager dismissIndicatorForActivity:@"StoryPartLoading"];
     }];
 }
 
-- (void)loadStoryPart:(StoryPart *)storyPart
+- (void)displayStoryPart:(StoryPart *)storyPart
 {
     [self.storyDescriptionCell.textLabel setText:storyPart.title];
     [self.questionCell.textLabel setText:@"究竟嘲笑她的，是甚麼呢？"];
@@ -248,6 +267,7 @@
                          rightViewFrame.size.width = self.view.frame.size.width / 2;
                          rightViewFrame.origin.x = self.view.frame.size.width / 2;
                          [rightView setFrame:rightViewFrame];
+                         [self.paginationAdapter scrollToIndex:self.currentStoryPartIndex setSelected:YES animated:NO];
                          [self.paginationView setAlpha:1];
                      }
                      completion:^(BOOL finished) {
@@ -292,6 +312,20 @@
     [self.popButton setBackgroundColor:color];
 }
 
+- (void)moveToPreviousPage
+{
+    if (self.currentStoryPartIndex <= 0) return;
+    self.currentStoryPartIndex -= 1;
+    [self loadCurrentStoryPart];
+}
+
+- (void)moveToNextPage
+{
+    if (self.currentStoryPartIndex >= self.story.maxPage) return;
+    self.currentStoryPartIndex += 1;
+    [self loadCurrentStoryPart];
+}
+
 #pragma mark - timer 
 
 - (void)startTimer
@@ -329,10 +363,7 @@
         [self.paginationAdapter scrollToNextPageWithAnimation:YES];
         return;
     }
-    
-    if (self.currentStoryPartIndex >= self.story.maxPage) return;
-    self.currentStoryPartIndex += 1;
-    [self loadCurrentStoryPart];
+    [self moveToNextPage];
 }
 
 - (void)reverseButtonDidClick:(UIButton *)button
@@ -342,10 +373,7 @@
         [self.paginationAdapter scrollToPreviousPageWithAnimation:YES];
         return;
     }
-    
-    if (self.currentStoryPartIndex <= 0) return;
-    self.currentStoryPartIndex -= 1;
-    [self loadCurrentStoryPart];
+    [self moveToPreviousPage];
 }
 
 - (void)favButtonDidClick:(UIButton *)button
@@ -356,7 +384,10 @@
 - (void)listButtonDidClick:(UIButton *)button
 {
     NSLog(@"button = %@", button);
-    if (self.isListingShown) return;
+    if (self.isListingShown) {
+        [self removeListing];
+        return;
+    }
     [self listingAnimation];
 }
 
@@ -392,6 +423,17 @@
     }
     [self updateStoryLikeStatus];
 }
+
+- (void)leftSwipe
+{
+    [self moveToNextPage];
+}
+
+- (void)rightSwipe
+{
+    [self moveToPreviousPage];
+}
+
 
 #pragma mark - scrollView delegate
 
@@ -445,7 +487,7 @@
     if (!_paginationAdapter) {
         _paginationAdapter = [[PaginationAdapter alloc] init];
         [_paginationAdapter setItems:self.story.storyPartIds];
-        NSLog(@"items = %@", self.story);
+        [_paginationAdapter setDelegate:self];
     }
     return _paginationAdapter;
 }
@@ -551,4 +593,13 @@
     }
     return _choiceDCell;
 }
+
+#pragma mark - TCHoriTableViewDelegate
+
+- (void)tableView:(UITableView *)tableView WithAdapter:(TCHoriTableViewAdapter *)adapter didSelectItem:(id)item ItemIndex:(NSUInteger)index
+{
+    self.currentStoryPartIndex = index;
+    [self loadCurrentStoryPart];
+}
+
 @end
