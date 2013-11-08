@@ -21,9 +21,9 @@ NSString *const StoryPartStoreKey = @"StoryPartStoreKey";
     }];
 
     NSString *urlString = [NSString stringWithFormat:@"http://bokkuapi.herokuapp.com/api/story_parts?%@", params];
-    [self getObjectsFromURL:[NSURL URLWithString:urlString] ParsingKeyPath:@[@"story_parts"] Completion:^(NSArray *objects) {
-        completion(objects);
-    }];
+//    [self getObjectsFromURL:[NSURL URLWithString:urlString] ParsingKeyPath:@[@"story_parts"] Completion:^(NSArray *objects) {
+//        completion(objects);
+//    }];
 }
 
 #pragma mark - storable protocolgg
