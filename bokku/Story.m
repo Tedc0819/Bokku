@@ -20,22 +20,23 @@
     return self;
 }
 
++ (NSDictionary *)hasOneRelationship
+{
+    return @{@"author" : @"Author"};
+}
+
++ (NSDictionary *)parsingMap
+{
+    return @{@"story_part_ids" : @"storyPartIds"};
+}
+
+#pragma mark - other logic
+
 + (void)getFeaturedStoriesWithCompletion:(void(^)(NSArray *stories))completion
 {
     [self getObjectsFromURL:[NSURL URLWithString:@"http://bokkuapi.herokuapp.com/api/stories"] ParsingKeyPath:@[@"stories"] Completion:^(NSArray *objects) {
         completion(objects);
     }];
-}
-
-- (void)getPropertyValuesFromDictionary:(NSDictionary *)dict
-{
-    self.author = (Author *)[self parsingOwningObjectWithKeyPath:@[@"author"] AsClass:@"Author" FromJsonObjectDictionary:dict];
-    [super getPropertyValuesFromDictionary:dict];
-}
-
-- (NSDictionary *)mappingDictionary
-{
-    return @{@"story_part_ids" : @"storyPartIds"};
 }
 
 - (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion
@@ -65,6 +66,11 @@
 - (NSUInteger)maxPage
 {
     return self.storyPartIds.count - 1;
+}
+
+- (void)bookmark
+{
+
 }
 
 @end
