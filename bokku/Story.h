@@ -31,5 +31,7 @@ typedef enum {
 - (void)loadStoryPartWithIndex:(NSInteger)index withCompletion:(void(^)(NSArray *relatedParts, StoryPart *storyPart))completion;
 
 - (NSUInteger)maxPage;
+- (void)bookmark;
+
 
 @end

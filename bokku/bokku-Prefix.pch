@@ -17,4 +17,5 @@
     #import "Extension.h"
     #import "TCStoreManager.h"
     #import "ActivityIndicatorManager.h"
+    #import "TCNoticeManager.h"
 #endif

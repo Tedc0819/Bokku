@@ -11,6 +11,8 @@
 		5126D06B180D3876001DD24A /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 5126D067180D3876001DD24A /* NSString+FontAwesome.m */; };
 		5126D06C180D3876001DD24A /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 5126D069180D3876001DD24A /* UIFont+FontAwesome.m */; };
 		5126D06F180D3DBA001DD24A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5126D06D180D388E001DD24A /* FontAwesome.ttf */; };
+		51439C89182356BA004AF512 /* TCHoriTableViewAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 51439C88182356BA004AF512 /* TCHoriTableViewAdapter.m */; };
+		51439C8C182395A3004AF512 /* PaginationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 51439C8B182395A3004AF512 /* PaginationAdapter.m */; };
 		516E4F0B181135E300CFF989 /* ChoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 516E4F0A181135E300CFF989 /* ChoiceCell.m */; };
 		516E4F0E18113A7E00CFF989 /* ColorBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 516E4F0D18113A7E00CFF989 /* ColorBar.m */; };
 		51753C5F18064EB80052A57B /* ActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 51753C2018064EB80052A57B /* ActivityIndicatorManager.m */; };
@@ -91,6 +93,10 @@
 		5126D068180D3876001DD24A /* UIFont+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+FontAwesome.h"; sourceTree = "<group>"; };
 		5126D069180D3876001DD24A /* UIFont+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+FontAwesome.m"; sourceTree = "<group>"; };
 		5126D06D180D388E001DD24A /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		51439C87182356BA004AF512 /* TCHoriTableViewAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHoriTableViewAdapter.h; sourceTree = "<group>"; };
+		51439C88182356BA004AF512 /* TCHoriTableViewAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHoriTableViewAdapter.m; sourceTree = "<group>"; };
+		51439C8A182395A3004AF512 /* PaginationAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaginationAdapter.h; sourceTree = "<group>"; };
+		51439C8B182395A3004AF512 /* PaginationAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaginationAdapter.m; sourceTree = "<group>"; };
 		516E4F09181135E300CFF989 /* ChoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoiceCell.h; sourceTree = "<group>"; };
 		516E4F0A181135E300CFF989 /* ChoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoiceCell.m; sourceTree = "<group>"; };
 		516E4F0C18113A7E00CFF989 /* ColorBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBar.h; sourceTree = "<group>"; };
@@ -238,9 +244,17 @@
 			name = AwesomeFont;
 			sourceTree = "<group>";
 		};
+		513F056E182CC556007CDC9E /* RenewJsonBackEndFramework */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RenewJsonBackEndFramework;
+			sourceTree = "<group>";
+		};
 		51753C1D18064EB80052A57B /* TCDevelopmentLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				513F056E182CC556007CDC9E /* RenewJsonBackEndFramework */,
 				51753C1E18064EB80052A57B /* BasicUtility */,
 				51753C2918064EB80052A57B /* Extensions */,
 				51753C3418064EB80052A57B /* Reachability.h */,
@@ -339,6 +353,8 @@
 				51753C4718064EB80052A57B /* TCHorizontalViewListAdapter.m */,
 				51753C4818064EB80052A57B /* TCURLImageViewListAdapter.h */,
 				51753C4918064EB80052A57B /* TCURLImageViewListAdapter.m */,
+				51439C87182356BA004AF512 /* TCHoriTableViewAdapter.h */,
+				51439C88182356BA004AF512 /* TCHoriTableViewAdapter.m */,
 			);
 			path = Adapter;
 			sourceTree = "<group>";
@@ -440,6 +456,8 @@
 				95FBF15C17F9E035001C055E /* Supporting Files */,
 				516E4F0C18113A7E00CFF989 /* ColorBar.h */,
 				516E4F0D18113A7E00CFF989 /* ColorBar.m */,
+				51439C8A182395A3004AF512 /* PaginationAdapter.h */,
+				51439C8B182395A3004AF512 /* PaginationAdapter.m */,
 			);
 			path = bokku;
 			sourceTree = "<group>";
@@ -625,10 +643,12 @@
 				51753C6C18064EB80052A57B /* TCNoticeManagerSetting.m in Sources */,
 				51753C6418064EB80052A57B /* NSString+Encryption.m in Sources */,
 				51753C7418064EB80052A57B /* TCJsonObject.m in Sources */,
+				51439C8C182395A3004AF512 /* PaginationAdapter.m in Sources */,
 				516E4F0E18113A7E00CFF989 /* ColorBar.m in Sources */,
 				51753C7218064EB80052A57B /* URLImageViewListCell.m in Sources */,
 				51753C7918064EB80052A57B /* TCSegmentedControlButtonManager.m in Sources */,
 				51753C7A18064EB80052A57B /* TCSideMenuViewController.m in Sources */,
+				51439C89182356BA004AF512 /* TCHoriTableViewAdapter.m in Sources */,
 				95FBF16917F9E035001C055E /* bokku.xcdatamodeld in Sources */,
 				51753C6918064EB80052A57B /* Reachability.m in Sources */,
 				51753C921806916A0052A57B /* SettingViewController.m in Sources */,
